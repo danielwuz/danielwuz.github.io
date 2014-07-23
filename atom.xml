@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://danielwuz.github.io/atom.xml" rel="self"/>
   <link href="http://danielwuz.github.io/"/>
-  <updated>2014-07-23T09:39:58-04:00</updated>
+  <updated>2014-07-23T09:55:39-04:00</updated>
   <id>http://danielwuz.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,5 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[My First Blog]]></title>
+    <link href="http://danielwuz.github.io/blog/2014/07/23/my-first-blog/"/>
+    <updated>2014-07-23T09:52:05-04:00</updated>
+    <id>http://danielwuz.github.io/blog/2014/07/23/my-first-blog</id>
+    <content type="html"><![CDATA[<p>This is an experimental post. You might want to simply skip it because it provides nothing useful. I leave it here to allow myself try out different settings and plugins in octopress.</p>
+
+<p>Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.</p>
+
+<p>Try out code snippet plugin and style. Nunc ac metus diam. <code>inline code</code> Nulla ornare massa in egestas malesuada.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Fixnum</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">prime?</span>
+</span><span class='line'>    <span class="p">(</span><span class="s1">&#39;1&#39;</span> <span class="o">*</span> <span class="nb">self</span><span class="p">)</span> <span class="o">!~</span> <span class="sr">/^1?$|^(11+?)\1+$/</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
 </feed>
