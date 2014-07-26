@@ -18,3 +18,5 @@ class Fixnum
   end
 end
 ```
+
+A paragraph after code snippets.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.

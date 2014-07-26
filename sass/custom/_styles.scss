@@ -1,9 +1,11 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+@import "footnote";
 
 body {
   background-color: #FAFAFA;
-  font-size: 16px;
+  font-size: 16px !important;
+  margin: 0px auto !important;
 
   &>header {
     display: none;
@@ -15,6 +17,10 @@ body {
     text-shadow: none;
 
     a {color: #999 !important;}
+  }
+
+  p, article blockquote, ul, ol {
+    margin-bottom: 1.5em;
   }
 }
 
@@ -35,4 +41,15 @@ nav {
       color: #FFF !important;
     }
   }
+}
+
+#text-table-of-contents {
+  ul {
+    list-style: none;
+    a {text-decoration: none;}
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.5em;
 }

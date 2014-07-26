@@ -42,10 +42,10 @@ $solarized: light !default;
 $pre-bg: #3F3F3F;
 $pre-border: #3F3F3F;
 $font-mono: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+$inline-font-mono: "Source Code Pro",monospace;
 
 article{
   code, pre{
-	background: #3f3f3f;
 	border: 1px solid $pre-border;
 	font-family: $font-mono;
     color: #dcdccc;
@@ -58,6 +58,7 @@ article{
     margin-bottom: 1.5em !important;
   }
   pre{
+    background: #3f3f3f;
 	font-size: 1 / 0.9em;
 	line-height: 1.5;
 	margin-top: 10px;
@@ -69,6 +70,15 @@ article{
 	  padding: 0;
 	  margin: 0;
 	}
+  }
+
+  p code {
+    font-family: $inline-font-mono;
+    background-color: #F6F6F6;
+    border: none;
+    color: #333;
+    padding: 0px;
+    font-size: 15px;
   }
 }
 
