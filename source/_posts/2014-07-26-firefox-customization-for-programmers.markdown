@@ -26,9 +26,9 @@ Firefox is famous for its highly customizability. You can almost tailor everythi
 
 # Maximize content area
 
-One of the thing that I would like to do is to remove tab margin. Tab margin is the blank space between a tab and your browser top boundary, as in Figure.
+One of the thing that I would like to do is to remove tab margin. Tab margin is the blank space between a tab and your browser top boundary, as in below figure.
 
-![img](/images/20140726/tab_margin.png "tab margin")
+![img](/images/20140726/tab_margin.png  =250x "tab margin")
 
 Since most of the time I keep my firefox full screen, I don't like tab margin because it's wasting space and I don't see any value of it, especially when I'm working on a small screen, every pixel counts! Let's get rid of it.
 

@@ -74,10 +74,10 @@ article{
 
   p code {
     font-family: $inline-font-mono;
-    background-color: #F6F6F6;
-    border: none;
+    background-color: #F5F7F8 !important;
     color: #333;
-    padding: 0px;
+    border: 1px solid #E4E4E4;
+    padding: 4px 4px 1px;
     font-size: 15px;
   }
 }
