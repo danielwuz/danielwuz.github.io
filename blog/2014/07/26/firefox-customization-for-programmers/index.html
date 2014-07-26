@@ -1,24 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Daniel Wu's Blog]]></title>
-  <link href="http://danielwuz.github.io/atom.xml" rel="self"/>
-  <link href="http://danielwuz.github.io/"/>
-  <updated>2014-07-26T17:30:10-04:00</updated>
-  <id>http://danielwuz.github.io/</id>
-  <author>
-    <name><![CDATA[Daniel Wu]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Firefox Customization for Programmers - Daniel Wu's Blog</title>
+  <meta name="author" content="Daniel Wu">
 
   
-  <entry>
-    <title type="html"><![CDATA[Firefox Customization for Programmers]]></title>
-    <link href="http://danielwuz.github.io/blog/2014/07/26/firefox-customization-for-programmers/"/>
-    <updated>2014-07-26T10:03:53-04:00</updated>
-    <id>http://danielwuz.github.io/blog/2014/07/26/firefox-customization-for-programmers</id>
-    <content type="html"><![CDATA[<div id="table-of-contents">
+  <meta name="description" content="Table of Contents 1. Introduction
+2. Maximize content area
+3. Maximize speed!
+4. Navigate faster
+5. Duckduckgo
+6. What&#8217;s next
+7. External &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://danielwuz.github.io/blog/2014/07/26/firefox-customization-for-programmers">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Daniel Wu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="/javascripts/custom.js" type="text/javascript"></script>
+<!-- <script src="/javascripts/footnote.js" type="text/javascript"></script> -->
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Daniel Wu's Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:danielwuz.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Firefox Customization for Programmers</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-26T10:03:53-04:00" pubdate data-updated="true">Jul 26<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
@@ -42,7 +124,7 @@
 
 <p>One of the thing that I would like to do is to remove tab margin. Tab margin is the blank space between a tab and your browser top boundary, as in below figure.</p>
 
-<p><img src="http://danielwuz.github.io/images/20140726/tab_margin.png" width="250" title="tab margin" alt="img" /></p>
+<p><img src="/images/20140726/tab_margin.png" width="250" title="tab margin" alt="img" /></p>
 
 <p>Since most of the time I keep my firefox full screen, I don&rsquo;t like tab margin because it&rsquo;s wasting space and I don&rsquo;t see any value of it, especially when I&rsquo;m working on a small screen, every pixel counts! Let&rsquo;s get rid of it.</p>
 
@@ -82,9 +164,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>See how Firefox looks in below screenshot<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>. You can download the final <code>userChrome.css</code> file <a href="http://danielwuz.github.io/assets/20140726/userChrome.css">here</a>.</p>
+<p>See how Firefox looks in below screenshot<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>. You can download the final <code>userChrome.css</code> file <a href="/assets/20140726/userChrome.css">here</a>.</p>
 
-<p><img src="http://danielwuz.github.io/images/20140726/fullscreen.png" title="no margin" alt="img" /></p>
+<p><img src="/images/20140726/fullscreen.png" title="no margin" alt="img" /></p>
 
 <h1>Maximize speed!</h1>
 
@@ -92,7 +174,7 @@
 
 <p>In address bar, type <code>about:config</code> and then click button &ldquo;I&rsquo;ll be careful, I promise!&rdquo;. In the search box, type <code>pipe</code> and hit enter. You should see some configuration similar to below screenshot.</p>
 
-<p><img src="http://danielwuz.github.io/images/20140726/about_config.png" title="about:config" alt="img" /></p>
+<p><img src="/images/20140726/about_config.png" title="about:config" alt="img" /></p>
 
 <p>Update below preferences:</p>
 
@@ -143,7 +225,7 @@
 
 <p>One of the killer feature of VimFx is <code>f</code> &ndash; following a link on current page. It&rsquo;s so amazing that it I think it deserves a separate paragraph. <code>f</code> allows you quickly jump to any clickable element in a page by hitting a single key, similar to vim-easymotion or ace-jump in Emacs. Let&rsquo;s take a look in action. Go to <code>www.google.com</code>, and hit <code>f</code>. You&rsquo;ll see all clickable elements on the page will have a letter by its side.</p>
 
-<p><img src="http://danielwuz.github.io/images/20140726/vimfx.png" title="vimfx F key" alt="img" /></p>
+<p><img src="/images/20140726/vimfx.png" title="vimfx F key" alt="img" /></p>
 
 <p>If you then hit any of those, Firefox will automatically click corresponding element, no matter an text box or a click. For example, hitting <code>s</code> in previous screenshot will focus on the search box.</p>
 
@@ -228,35 +310,108 @@
 
 
 
-]]></content>
-  </entry>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
   
-  <entry>
-    <title type="html"><![CDATA[My First Blog]]></title>
-    <link href="http://danielwuz.github.io/blog/2014/07/23/my-first-blog/"/>
-    <updated>2014-07-23T09:52:05-04:00</updated>
-    <id>http://danielwuz.github.io/blog/2014/07/23/my-first-blog</id>
-    <content type="html"><![CDATA[<p>This is an experimental post. You might want to simply skip it because it provides nothing useful. I leave it here to allow myself try out different settings and plugins in octopress.</p>
 
-<p>Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.</p>
+<span class="byline author vcard">Posted by <span class="fn">Daniel Wu</span></span>
 
-<p>Try out code snippet plugin and style. Nunc ac metus diam. <code>inline code</code> Nulla ornare massa in egestas malesuada.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Fixnum</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">prime?</span>
-</span><span class='line'>    <span class="p">(</span><span class="s1">&#39;1&#39;</span> <span class="o">*</span> <span class="nb">self</span><span class="p">)</span> <span class="o">!~</span> <span class="sr">/^1?$|^(11+?)\1+$/</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+      
 
 
-<p>A paragraph after code snippets.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.</p>
-]]></content>
-  </entry>
+
+
+
+
+
+
   
-</feed>
+
+
+<time datetime="2014-07-26T10:03:53-04:00" pubdate data-updated="true">Jul 26<sup>th</sup>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://danielwuz.github.io/blog/2014/07/26/firefox-customization-for-programmers/" data-via="" data-counturl="http://danielwuz.github.io/blog/2014/07/26/firefox-customization-for-programmers/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/23/my-first-blog/" title="Previous Post: My first blog">&laquo; My first blog</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/26/firefox-customization-for-programmers/">Firefox Customization for Programmers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/23/my-first-blog/">My First Blog</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Daniel Wu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

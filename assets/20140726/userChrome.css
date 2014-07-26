@@ -1,0 +1,13 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+/* The above line should appear only once */
+
+
+
+#TabsToolbar {
+  margin-top: -10px !important;
+}
+
+#nav-bar-customization-target {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}

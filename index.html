@@ -5,11 +5,17 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Daniel Wu's Blog</title>
+  <meta name="author" content="Daniel Wu">
 
   
-  <meta name="description" content="This is an experimental post. You might want to simply skip it because it provides nothing useful. I leave it here to allow myself try out different &hellip;">
+  <meta name="description" content="Table of Contents 1. Introduction
+2. Maximize content area
+3. Maximize speed!
+4. Navigate faster
+5. Duckduckgo
+6. What&#8217;s next
+7. External &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +27,7 @@
   <link rel="canonical" href="http://danielwuz.github.io">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Daniel Wu's Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -29,6 +35,9 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="/javascripts/custom.js" type="text/javascript"></script>
+<!-- <script src="/javascripts/footnote.js" type="text/javascript"></script> -->
 
   
 
@@ -36,7 +45,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Daniel Wu's Blog</a></h1>
   
     <h2>A blogging framework for hackers.</h2>
   
@@ -65,6 +74,251 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/26/firefox-customization-for-programmers/">Firefox Customization for Programmers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-26T10:03:53-04:00" pubdate data-updated="true">Jul 26<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Maximize content area</a></li>
+<li><a href="#sec-3">3. Maximize speed!</a></li>
+<li><a href="#sec-4">4. Navigate faster</a></li>
+<li><a href="#sec-5">5. Duckduckgo</a></li>
+<li><a href="#sec-6">6. What&#8217;s next</a></li>
+<li><a href="#sec-7">7. External links</a></li>
+</ul>
+</div>
+</div>
+
+
+<h1>Introduction</h1>
+
+<p>Firefox is famous for its highly customizability. You can almost tailor everything in Firefox to meet your taste. In this blog, I&rsquo;ll show you some customization that I did to increase my productivity as a  programmer. The browser version is 31.0 on MacOS as I&rsquo;m writing this blog, but it should be similar on other platforms.</p>
+
+<h1>Maximize content area</h1>
+
+<p>One of the thing that I would like to do is to remove tab margin. Tab margin is the blank space between a tab and your browser top boundary, as in below figure.</p>
+
+<p><img src="/images/20140726/tab_margin.png" width="250" title="tab margin" alt="img" /></p>
+
+<p>Since most of the time I keep my firefox full screen, I don&rsquo;t like tab margin because it&rsquo;s wasting space and I don&rsquo;t see any value of it, especially when I&rsquo;m working on a small screen, every pixel counts! Let&rsquo;s get rid of it.</p>
+
+<p>First off, let&rsquo;s find <code>userChrome.css</code>. <code>userChrome.css</code> is a CSS file in chrome folder that can be used to change the way that Firefox interface look. Basically, when you launch a Firefox application, it will load <code>userChrome.css</code> after loading its default settings; Therefore, you can customize almost every aspects of your browser UI by putting CSS in that file.</p>
+
+<p>On Mac, you can find <code>userChrome.css</code> in directory <em>&ldquo;~/Library/Application Support/Firefox/Profiles/xxxxxxxx.default/chrome/&rdquo;</em>. Here, <code>xxxxxxxx</code> is a string of random characters. If you have trouble finding that location or you&rsquo;re on a different platform, see <a href="http://kb.mozillazine.org/Profile_folder_-_Firefox">Firefox Profile Folder</a> for more detailed instruction.</p>
+
+<p>Under the profile folder, open <code>userChrome.css</code> with your favarite text editor. If that file doesn&rsquo;t exist, simply create one in plain text. Then add below code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@namespace</span> <span class="nt">url</span><span class="o">(</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="nc">.mozilla.org</span><span class="o">/</span><span class="nt">keymaster</span><span class="o">/</span><span class="nt">gatekeeper</span><span class="o">/</span><span class="nt">there</span><span class="nc">.is.only.xul</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'><span class="c">/* The above line should appear only once */</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#TabsToolbar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">margin-top</span><span class="o">:</span> <span class="m">-10px</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And that&rsquo;s it! Relaunch your Firefox, you should see top margin is gone.</p>
+
+<p>Another customization that you may do is to narrow the navigation bar margin a little bit. In my opinion, the default margin is too wide that makes the address bar look so small. Appending below code in your <code>userChrome.css</code> to make it thinner.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nf">#nav-bar-customization-target</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">padding-top</span><span class="o">:</span> <span class="m">0px</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">padding-bottom</span><span class="o">:</span> <span class="m">0px</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>See how Firefox looks in below screenshot<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>. You can download the final <code>userChrome.css</code> file <a href="/assets/20140726/userChrome.css">here</a>.</p>
+
+<p><img src="/images/20140726/fullscreen.png" title="no margin" alt="img" /></p>
+
+<h1>Maximize speed!</h1>
+
+<p>If you&rsquo;re like me, who spend a significant time browsing web pages and looking for documentations everyday, you would like your browser to load a page as fast as possible. Here, I&rsquo;ll show you an easy way to make Firefox loading a page much much faster than other browsers. The idea is to by customizing HTTP Pipelining in Firefox. HTTP Pipelining is a technique in which multiple requests will be send out without waiting for the corresponding responses. It helps to speed up the browsing capability.</p>
+
+<p>In address bar, type <code>about:config</code> and then click button &ldquo;I&rsquo;ll be careful, I promise!&rdquo;. In the search box, type <code>pipe</code> and hit enter. You should see some configuration similar to below screenshot.</p>
+
+<p><img src="/images/20140726/about_config.png" title="about:config" alt="img" /></p>
+
+<p>Update below preferences:</p>
+
+<table class="table table-striped">
+<thead>
+<tr>
+<th ><b>Preferences</b></th>
+<th ><b>Value</b></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td >network.http.pipelining</td>
+<td >true</td>
+</tr>
+
+
+<tr>
+<td >network.http.pipelining.maxrequests</td>
+<td >8</td>
+</tr>
+
+
+<tr>
+<td >network.http.pipelining.ssl</td>
+<td >true</td>
+</tr>
+
+
+<tr>
+<td >network.http.proxy.pipelining</td>
+<td >true</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>That&rsquo;s it. Restart your Firefox, and enjoy the speed.</p>
+
+<h1>Navigate faster</h1>
+
+<p>As a programmer, Just imagine how amazing and effecient it would be to accomplish all your work only by keyboard.</p>
+
+<p>Fortunately, there is a add-on called <em>VimFx</em> you can add to your Firefox. VimFx introduces Vim-style keyboard shortcuts for browsing and navigation, which can significantly reduce the time you spend moving your hand off the keyboard just to find the mouse. You can find this add-on and install instruction <a href="https://addons.mozilla.org/en-US/firefox/addon/vimfx/">here</a>. If you&rsquo;re a programmer and interested in this project, you may find their project page on <a href="https://github.com/akhodakivskiy/VimFx">GitHub</a>.</p>
+
+<p>After installing VimFx to your Firefox, you may hit <code>?</code> on any page to see its keyboard cheatsheet. Here I&rsquo;ll show your some most useful shortcuts to get your on board. Since it&rsquo;s similar to vim, you can hit <code>j</code> to scroll page down, <code>k</code> to scroll page up, <code>h</code> to scroll left and <code>l</code> to scroll right; you can hit <code>o</code> to quickly focus on Address Bar, <code>O</code> to quickly focus on Search Bar; you can hit <code>d</code> to scroll half a page down, <code>u</code> to scroll half a page up, <code>gg</code>(means hit <code>g</code> twice) to go to the top of current page, <code>G</code> to go to the bottom; you can hit <code>J</code> to move to previous tab, <code>K</code> move to next one; you can hit <code>x</code> to close current tab, hit <code>X</code> to re-open last closed tab, which is my favoriate feature of this add-on.</p>
+
+<p>One of the killer feature of VimFx is <code>f</code> &ndash; following a link on current page. It&rsquo;s so amazing that it I think it deserves a separate paragraph. <code>f</code> allows you quickly jump to any clickable element in a page by hitting a single key, similar to vim-easymotion or ace-jump in Emacs. Let&rsquo;s take a look in action. Go to <code>www.google.com</code>, and hit <code>f</code>. You&rsquo;ll see all clickable elements on the page will have a letter by its side.</p>
+
+<p><img src="/images/20140726/vimfx.png" title="vimfx F key" alt="img" /></p>
+
+<p>If you then hit any of those, Firefox will automatically click corresponding element, no matter an text box or a click. For example, hitting <code>s</code> in previous screenshot will focus on the search box.</p>
+
+<p>If you are a vim user, you should find yourself at home; if you are not a vim user, play with it, and see how it can accelerate the way you browsing web pages.</p>
+
+<h1>Duckduckgo</h1>
+
+<p>Last by not least, I suggest setting your default search engine in Firefox to <em>Duckduckgo</em>. <a href="https://www.duckduckgo.com">Duckduckgo</a> is a search engine that emphasizes user privacy and avoid personalized user results. That means all users will see the same search results for a given search term. But what fascinates me is the power of search with bang <code>!</code>.</p>
+
+<p>Bang <code>!</code> is a powerful tool for searching, and is unique in Duckduckgo. Typically, when a user wants to search something, she opens a new tab and go to her favorite search engine, <code>www.google.com</code> for instance, and types search terms, then hits <code>Enter</code>. Nothing wrong with this workflow, but we can do better. As a programmer, I often need to search on different sites, I may search a project on GitHub, or search a video on Youtube, or search a online course on Coursera. Duckduckgo can really help out in this situation by unifying the way you search.</p>
+
+<p>Let&rsquo;s try it out. Firstly, let&rsquo;s set Duckduckgo as our default search engine. Go to <code>https://duckduckgo.com</code>, then click link &ldquo;Use in Firefox&rdquo; at the very bottom. Click &ldquo;OK&rdquo; in the pop up to accept, and we&rsquo;re good to go.</p>
+
+<p>Now we can search any term directly in our search box or address bar<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>. Let&rsquo;s say I&rsquo;d like to search emacs on GitHub. Type <code>emacs !gh</code> (&ldquo;gh&rdquo; stands for &ldquo;Git Hub&rdquo;) in search box, then hit enter. Bang! A Github search result page will show in the browser with the keyword &ldquo;emacs&rdquo;. How amazing! We don&rsquo;t even have to go to <code>https://github.com/</code> first. Similarly, if I want to search emacs on Youtube, I can simply type <code>emacs !yt</code> in my search box. Additionally, sometimes you might still want to search on Google or Bing, you can easily do so by appending <code>!g</code> or <code>!b</code> to your search terms, respectively. What&rsquo;s more, if you just include bang <code>!</code> with your search terms, Duckduckgo will redirect you to the first search result. This is handy for navigational search, e.g. try <code>facebook !</code>.</p>
+
+<p>There are many such shortcuts with bang, I&rsquo;ll list some below that I use most frequently.</p>
+
+<table class="table table-striped">
+<thead>
+<tr>
+<th >site</th>
+<th >shortcut</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td >Google</td>
+<td >!g</td>
+</tr>
+
+
+<tr>
+<td >Bing</td>
+<td >!b</td>
+</tr>
+
+
+<tr>
+<td >GitHub</td>
+<td >!gh</td>
+</tr>
+
+
+<tr>
+<td >Youtube</td>
+<td >!yt</td>
+</tr>
+
+
+<tr>
+<td >Wikipedia</td>
+<td >!w</td>
+</tr>
+
+
+<tr>
+<td >Youdao Dictionary</td>
+<td >!ydd</td>
+</tr>
+</tbody>
+</table>
+
+
+<h1>What&rsquo;s next</h1>
+
+<p>There are many more tricks and add-ons a developer can use the increase productivity, for example, <code>Tile Tabs</code> allows you to align tabs side by side, and <code>FindBar Tweak</code> offers a really great in-browser text search experience. I may cover more add-ons like those in another blog.</p>
+
+<p>Besides, you may wonder how do I know which attributes to put into <code>userChrome.css</code>. It turns out Firefox GUI is very similar to an HTML application and you can inspect its element and/or debug its GUI, with an add-on called <code>DOM Inspector</code>. I may cover this topic in future blog as well.</p>
+
+<h1>Footnotes</h1>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'><p> Screenshot was taken in fullscreen, with theme Fearthox designed by IAL.
+  <a href='#fnref:1' rev='footnote'>↩</a></p>
+</li><li id='fn:2'><p> I personally removed search box from toolbar, because I can use address bar for both searching and navigating. If I want to perform searching, I simply type search terms plus <code>!g</code> in address bar, as you see in this blog, thanks to the power of duckduckgo.
+<a href='#fnref:2' rev='footnote'>↩</a></p>
+</li>
+    </ol>
+</div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -112,6 +366,8 @@
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>A paragraph after code snippets.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.</p>
 </div>
   
   
@@ -132,6 +388,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/07/26/firefox-customization-for-programmers/">Firefox Customization for Programmers</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/07/23/my-first-blog/">My First Blog</a>
       </li>
     
@@ -148,7 +408,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Your Name -
+  Copyright &copy; 2014 - Daniel Wu -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
