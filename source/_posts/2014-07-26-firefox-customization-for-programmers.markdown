@@ -140,8 +140,8 @@ There are many such shortcuts with bang, I'll list some below that I use most fr
 <table class="table table-striped">
 <thead>
 <tr>
-<th >site</th>
-<th >shortcut</th>
+<th ><b>Site</b></th>
+<th ><b>Shortcut</b></th>
 </tr>
 </thead>
 
