@@ -20,3 +20,13 @@ end
 ```
 
 A paragraph after code snippets.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.
+
+Test math equations
+
+$$
+\begin{align}
+\mbox{Union: } & A\cup B = \{x\mid x\in A \mbox{ or } x\in B\}
+\mbox{Concatenation: } & A\circ B  = \{xy\mid x\in A \mbox{ and } y\in B\}
+\mbox{Star: } & A^\star  = \{x_1x_2\ldots x_k \mid  k\geq 0 \mbox{ and each } x_i\in A\}
+\end{align}
+$$
