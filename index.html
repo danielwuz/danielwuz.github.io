@@ -9,7 +9,7 @@
   <meta name="author" content="Daniel Wu">
 
   
-  <meta name="description" content="In mathematics, the Fibonnaci numbers are integers given by below equals:
+  <meta name="description" content="In mathematics, the Fibonacci numbers are integers given by below equals:
 $$
 \begin{equation} F_n = \begin{cases} 1 &amp; \text{if } n &lt;= 2, \cr &hellip;">
   
@@ -91,7 +91,7 @@ MathJax.Hub.Config({
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonnaci Numbers</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonacci Numbers</a></h1>
     
     
       <p class="meta">
@@ -114,7 +114,7 @@ MathJax.Hub.Config({
   </header>
 
 
-  <div class="entry-content"><p>In mathematics, the Fibonnaci numbers are integers given by below equals:
+  <div class="entry-content"><p>In mathematics, the Fibonacci numbers are integers given by below equals:
 $$
 \begin{equation}
   F_n =
@@ -124,7 +124,7 @@ $$
   \end{cases}
 \end{equation}
 $$
-This number sequence has many beautiful properties, and numerous algorithms and applications are inspired by or turned out to follow its properties, for example, <a href="https://en.wikipedia.org/wiki/Fibonacci_heap">Fibonnaci Heap</a>. Topics on this sequence of numbers have been well developed over the years, nonetheless it&rsquo;s still one of the most popular questions you can expect in an interview.</p>
+This number sequence has many beautiful properties, and numerous algorithms and applications are inspired by or turned out to follow its properties, for example, <a href="https://en.wikipedia.org/wiki/Fibonacci_heap">Fibonacci Heap</a>. Topics on this sequence of numbers have been well developed over the years, nonetheless it&rsquo;s still one of the most popular questions you can expect in an interview.</p>
 
 <p>It&rsquo;s not hard for a software developer to come up with an brute-force solution in 5 minutes, shown as below code snippet:</p>
 
@@ -136,14 +136,14 @@ This number sequence has many beautiful properties, and numerous algorithms and 
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonnaci number.</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonacci number.</span>
 </span><span class='line'><span class="sd">    &#39;&#39;&#39;</span>
 </span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 </span><span class='line'>        <span class="k">return</span> <span class="mi">0</span>
 </span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
 </span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -168,8 +168,8 @@ This number sequence has many beautiful properties, and numerous algorithms and 
 <span class='line-number'>15</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonnaci number.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonacci number.</span>
 </span><span class='line'><span class="sd">    &#39;&#39;&#39;</span>
 </span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
 </span><span class='line'>        <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
@@ -179,7 +179,7 @@ This number sequence has many beautiful properties, and numerous algorithms and 
 </span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
 </span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -591,7 +591,7 @@ $$</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonnaci Numbers</a>
+        <a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonacci Numbers</a>
       </li>
     
       <li class="post">
