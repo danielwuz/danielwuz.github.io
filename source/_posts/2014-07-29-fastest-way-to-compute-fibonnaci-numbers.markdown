@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Fastest Way to Compute Fibonnaci Numbers"
+title: "Fastest Way to Compute Fibonacci Numbers"
 date: 2014-07-29 21:26:00 -0400
 comments: true
 categories:
 ---
-In mathematics, the Fibonnaci numbers are integers given by below equals:
+In mathematics, the Fibonacci numbers are integers given by below equals:
 $$
 \begin{equation}
   F\_n =
@@ -15,19 +15,19 @@ $$
   \end{cases}
 \end{equation}
 $$
-This number sequence has many beautiful properties, and numerous algorithms and applications are inspired by or turned out to follow its properties, for example, [Fibonnaci Heap](<https://en.wikipedia.org/wiki/Fibonacci_heap>). Topics on this sequence of numbers have been well developed over the years, nonetheless it's still one of the most popular questions you can expect in an interview.
+This number sequence has many beautiful properties, and numerous algorithms and applications are inspired by or turned out to follow its properties, for example, [Fibonacci Heap](<https://en.wikipedia.org/wiki/Fibonacci_heap>). Topics on this sequence of numbers have been well developed over the years, nonetheless it's still one of the most popular questions you can expect in an interview.
 
 It's not hard for a software developer to come up with an brute-force solution in 5 minutes, shown as below code snippet:
 
 ``` python
-def fibonnaci(n):
-    '''Computes nth fibonnaci number.
+def fibonacci(n):
+    '''Computes nth fibonacci number.
     '''
     if n == 0:
         return 0
     if n <= 2:
         return 1
-    return fibonnaci(n - 1) + fibonnaci(n - 2)
+    return fibonacci(n - 1) + fibonacci(n - 2)
 ```
 
 This is a work solution. The problem is that, however, the computation is too expensive because basically it recomputes lots of results in the two recursive call. In fact, the complexity is approximately $O(2\^n)$. The issue has been well discussed on [StackOverflow](http://stackoverflow.com/questions/360748/computational-complexity-of-fibonacci-sequence).
@@ -37,8 +37,8 @@ Of course, we can gain a huge performance improvement by simply momerize previou
 ``` python
 memo = {}
 
-def fibonnaci(n):
-    '''Computes nth fibonnaci number.
+def fibonacci(n):
+    '''Computes nth fibonacci number.
     '''
     if n in memo:
         return memo[n]
@@ -48,7 +48,7 @@ def fibonnaci(n):
     if n <= 2:
         return 1
 
-    memo[n] = fibonnaci(n - 1) + fibonnaci(n - 2)
+    memo[n] = fibonacci(n - 1) + fibonacci(n - 2)
     return memo[n]
 ```
 
