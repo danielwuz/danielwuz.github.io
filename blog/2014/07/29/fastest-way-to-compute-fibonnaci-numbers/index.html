@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fastest Way to Compute Fibonnaci Numbers - Daniel Wu's Blog</title>
+  <meta name="author" content="Daniel Wu">
+
+  
+  <meta name="description" content="In mathematics, the Fibonnaci numbers are integers given by below equals:
+$$
+\begin{equation} F_n = \begin{cases} 1 &amp; \text{if } n &lt;= 2, \cr &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Daniel Wu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script src="/javascripts/custom.js" type="text/javascript"></script>
+<!-- <script src="/javascripts/footnote.js" type="text/javascript"></script> -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$']],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+    multiLine: true,
+  },
+  messageStyle: "none",
+  "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Daniel Wu's Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:danielwuz.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Fastest Way to Compute Fibonnaci Numbers</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-29T21:26:00-04:00" pubdate data-updated="true">Jul 29<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In mathematics, the Fibonnaci numbers are integers given by below equals:
+$$
+\begin{equation}
+  F_n =
+  \begin{cases}
+  1 &amp; \text{if } n &lt;= 2, \cr
+  F_{n-1} + F_{n-2} &amp; \text{if } n > 2.
+  \end{cases}
+\end{equation}
+$$
+This number sequence has many beautiful properties, and numerous algorithms and applications are inspired by or turned out to follow its properties, for example, <a href="https://en.wikipedia.org/wiki/Fibonacci_heap">Fibonnaci Heap</a>. Topics on this sequence of numbers have been well developed over the years, nonetheless it&rsquo;s still one of the most popular questions you can expect in an interview.</p>
+
+<p>It&rsquo;s not hard for a software developer to come up with an brute-force solution in 5 minutes, shown as below code snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonnaci number.</span>
+</span><span class='line'><span class="sd">    &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is a work solution. The problem is that, however, the computation is too expensive because basically it recomputes lots of results in the two recursive call. In fact, the complexity is approximately $O(2^n)$. The issue has been well discussed on <a href="http://stackoverflow.com/questions/360748/computational-complexity-of-fibonacci-sequence">StackOverflow</a>.</p>
+
+<p>Of course, we can gain a huge performance improvement by simply momerize previously computed results. Just as blow python code,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonnaci number.</span>
+</span><span class='line'><span class="sd">    &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Observe that we compute each Fibonacci number from 0 to $n$ only once. Therefore, the complexity of computing $n$th Fibonacci number reduces to $O(n)$ immediately!</p>
+
+<p>But can we do better? I read from this <a href="http://vinayakgarg.wordpress.com/2012/11/07/fastest-way-to-compute-fibonacci-number/">post</a>, the author gave out a decent solution based on the fact that
+$$
+\begin{equation}
+  F_{2k} = F_k*(F_{k+1} &ndash; F_k) \
+  F_{2k+1} = F_{k+1}^2 + F_k^2
+\end{equation}
+$$</p>
+
+<p>I just copied over the code for you to read, as below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fib</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Very nice solution! This algorithm computes Fibonacci number efficiently in $O(log(n))$ time.</p>
+
+<p>To complete this blog, I would really like to show you a smart way that I read from the book &ldquo;The Art of Computer Programming (volume 1)&rdquo;. I was totally amazed by its elegance when I first saw this solution. The idea is based on below equation:
+$$
+\begin{equation}
+ F_n = \frac{1}{\sqrt{5}}(\phi^n &ndash; \hat{\phi}^n)
+\end{equation}
+$$
+where
+$$
+\begin{equation}
+\hat{\phi} = 1 &ndash; \phi = \frac{1}{2}(1 &ndash; \sqrt{5})
+\end{equation}
+$$
+$\phi$ is the golden ratio, approximately equals value $1.6180339887$.</p>
+
+<p>Notice here that $\hat{\phi}$ has magnitude less that 1, therefore, $\hat{\phi}$ gets very small as $n$ gets large. As long as $\hat{\phi}$ is small enough, we have
+$$
+\begin{equation}
+ F_n = \frac{1}{\sqrt{5}}\phi^n
+\end{equation}
+$$
+Given by below python code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">sqrt_of_5</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">golden_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt_of_5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">golden_ratio</span> <span class="o">**</span> <span class="n">n</span> <span class="o">/</span> <span class="n">sqrt_of_5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although this function only computes approximate value, surprisely, it works well even when $n$ is small. Nevertheless, this solution is by no means better than previous one. Because of the exponentiation operation, it still runs $O(log(n))$ time on the machine code level.</p>
+
+<p>If you&rsquo;re interested in computing Fibonacci numbers, I highly suggest you take a look at this <a href="http://www.chaos.org.uk/~eddy/craft/Fibonacci.html">article</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Daniel Wu</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-29T21:26:00-04:00" pubdate data-updated="true">Jul 29<sup>th</sup>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/" data-via="" data-counturl="http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/26/firefox-customization-for-programmers/" title="Previous Post: Firefox Customization for Programmers">&laquo; Firefox Customization for Programmers</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonnaci Numbers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/26/firefox-customization-for-programmers/">Firefox Customization for Programmers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/23/my-first-blog/">My First Blog</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Daniel Wu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'danielwuz';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/';
+        var disqus_url = 'http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

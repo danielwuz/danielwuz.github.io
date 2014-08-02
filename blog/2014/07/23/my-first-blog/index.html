@@ -31,6 +31,22 @@
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <script src="/javascripts/custom.js" type="text/javascript"></script>
 <!-- <script src="/javascripts/footnote.js" type="text/javascript"></script> -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$']],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+    multiLine: true,
+  },
+  messageStyle: "none",
+  "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
 
   
 
@@ -113,6 +129,16 @@
 
 
 <p>A paragraph after code snippets.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.</p>
+
+<p>Test math equations</p>
+
+<p>$$
+\begin{align}
+\mbox{Union: } &amp; A\cup B = {x\mid x\in A \mbox{ or } x\in B}
+\mbox{Concatenation: } &amp; A\circ B  = {xy\mid x\in A \mbox{ and } y\in B}
+\mbox{Star: } &amp; A^\star  = {x_1x_2\ldots x_k \mid  k\geq 0 \mbox{ and each } x_i\in A}
+\end{align}
+$$</p>
 </div>
 
 
@@ -174,6 +200,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonnaci Numbers</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/07/26/firefox-customization-for-programmers/">Firefox Customization for Programmers</a>
       </li>
     
@@ -203,7 +233,7 @@
   
 
 <script type="text/javascript">
-      var disqus_shortname = 'disqus_EPZBXTKsj4';
+      var disqus_shortname = 'danielwuz';
       
         
         // var disqus_developer = 1;

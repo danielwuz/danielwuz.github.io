@@ -4,7 +4,7 @@
   <title><![CDATA[Daniel Wu's Blog]]></title>
   <link href="http://danielwuz.github.io/atom.xml" rel="self"/>
   <link href="http://danielwuz.github.io/"/>
-  <updated>2014-07-27T23:19:26-04:00</updated>
+  <updated>2014-08-02T08:35:26-04:00</updated>
   <id>http://danielwuz.github.io/</id>
   <author>
     <name><![CDATA[Daniel Wu]]></name>
@@ -12,6 +12,161 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fastest Way to Compute Fibonnaci Numbers]]></title>
+    <link href="http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/"/>
+    <updated>2014-07-29T21:26:00-04:00</updated>
+    <id>http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers</id>
+    <content type="html"><![CDATA[<p>In mathematics, the Fibonnaci numbers are integers given by below equals:
+$$
+\begin{equation}
+  F_n =
+  \begin{cases}
+  1 &amp; \text{if } n &lt;= 2, \cr
+  F_{n-1} + F_{n-2} &amp; \text{if } n > 2.
+  \end{cases}
+\end{equation}
+$$
+This number sequence has many beautiful properties, and numerous algorithms and applications are inspired by or turned out to follow its properties, for example, <a href="https://en.wikipedia.org/wiki/Fibonacci_heap">Fibonnaci Heap</a>. Topics on this sequence of numbers have been well developed over the years, nonetheless it&rsquo;s still one of the most popular questions you can expect in an interview.</p>
+
+<p>It&rsquo;s not hard for a software developer to come up with an brute-force solution in 5 minutes, shown as below code snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonnaci number.</span>
+</span><span class='line'><span class="sd">    &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is a work solution. The problem is that, however, the computation is too expensive because basically it recomputes lots of results in the two recursive call. In fact, the complexity is approximately $O(2^n)$. The issue has been well discussed on <a href="http://stackoverflow.com/questions/360748/computational-complexity-of-fibonacci-sequence">StackOverflow</a>.</p>
+
+<p>Of course, we can gain a huge performance improvement by simply momerize previously computed results. Just as blow python code,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Computes nth fibonnaci number.</span>
+</span><span class='line'><span class="sd">    &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Observe that we compute each Fibonacci number from 0 to $n$ only once. Therefore, the complexity of computing $n$th Fibonacci number reduces to $O(n)$ immediately!</p>
+
+<p>But can we do better? I read from this <a href="http://vinayakgarg.wordpress.com/2012/11/07/fastest-way-to-compute-fibonacci-number/">post</a>, the author gave out a decent solution based on the fact that
+$$
+\begin{equation}
+  F_{2k} = F_k*(F_{k+1} &ndash; F_k) \
+  F_{2k+1} = F_{k+1}^2 + F_k^2
+\end{equation}
+$$</p>
+
+<p>I just copied over the code for you to read, as below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fib</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Very nice solution! This algorithm computes Fibonacci number efficiently in $O(log(n))$ time.</p>
+
+<p>To complete this blog, I would really like to show you a smart way that I read from the book &ldquo;The Art of Computer Programming (volume 1)&rdquo;. I was totally amazed by its elegance when I first saw this solution. The idea is based on below equation:
+$$
+\begin{equation}
+ F_n = \frac{1}{\sqrt{5}}(\phi^n &ndash; \hat{\phi}^n)
+\end{equation}
+$$
+where
+$$
+\begin{equation}
+\hat{\phi} = 1 &ndash; \phi = \frac{1}{2}(1 &ndash; \sqrt{5})
+\end{equation}
+$$
+$\phi$ is the golden ratio, approximately equals value $1.6180339887$.</p>
+
+<p>Notice here that $\hat{\phi}$ has magnitude less that 1, therefore, $\hat{\phi}$ gets very small as $n$ gets large. As long as $\hat{\phi}$ is small enough, we have
+$$
+\begin{equation}
+ F_n = \frac{1}{\sqrt{5}}\phi^n
+\end{equation}
+$$
+Given by below python code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">sqrt_of_5</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">golden_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt_of_5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">golden_ratio</span> <span class="o">**</span> <span class="n">n</span> <span class="o">/</span> <span class="n">sqrt_of_5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although this function only computes approximate value, surprisely, it works well even when $n$ is small. Nevertheless, this solution is by no means better than previous one. Because of the exponentiation operation, it still runs $O(log(n))$ time on the machine code level.</p>
+
+<p>If you&rsquo;re interested in computing Fibonacci numbers, I highly suggest you take a look at this <a href="http://www.chaos.org.uk/~eddy/craft/Fibonacci.html">article</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Firefox Customization for Programmers]]></title>
@@ -256,6 +411,16 @@
 
 
 <p>A paragraph after code snippets.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero purus, ultrices ullamcorper tristique vel, lacinia id elit. Mauris cursus lobortis mi condimentum fermentum. Morbi non eros non nulla tempor gravida. Vestibulum egestas molestie neque at aliquet. Etiam porta purus metus, ut interdum dolor sodales et. Suspendisse augue felis, auctor sit amet placerat non, hendrerit eu magna. Cras suscipit turpis nec risus volutpat aliquam. Aenean ac tellus justo.</p>
+
+<p>Test math equations</p>
+
+<p>$$
+\begin{align}
+\mbox{Union: } &amp; A\cup B = {x\mid x\in A \mbox{ or } x\in B}
+\mbox{Concatenation: } &amp; A\circ B  = {xy\mid x\in A \mbox{ and } y\in B}
+\mbox{Star: } &amp; A^\star  = {x_1x_2\ldots x_k \mid  k\geq 0 \mbox{ and each } x_i\in A}
+\end{align}
+$$</p>
 ]]></content>
   </entry>
   
