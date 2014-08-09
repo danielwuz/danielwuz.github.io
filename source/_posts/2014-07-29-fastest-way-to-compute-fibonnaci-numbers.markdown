@@ -55,12 +55,13 @@ def fibonacci(n):
 Observe that we compute each Fibonacci number from 0 to $n$ only once. Therefore, the complexity of computing $n$th Fibonacci number reduces to $O(n)$ immediately!
 
 But can we do better? I read from this [post](http://vinayakgarg.wordpress.com/2012/11/07/fastest-way-to-compute-fibonacci-number/), the author gave out a decent solution based on the fact that
-$$
+
 \begin{equation}
-  F\_{2k} = F\_k*(F\_{k+1} - F\_k) \\
+  F\_{2k} = F\_k*(F\_{k+1} - F\_k)
+\end{equation}
+\begin{equation}
   F\_{2k+1} = F\_{k+1}\^2 + F\_k\^2
 \end{equation}
-$$
 
 I just copied over the code for you to read, as below.
 
