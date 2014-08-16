@@ -183,13 +183,14 @@ This number sequence has many beautiful properties, and numerous algorithms and 
 
 <p>Observe that we compute each Fibonacci number from 0 to $n$ only once. Therefore, the complexity of computing $n$th Fibonacci number reduces to $O(n)$ immediately!</p>
 
-<p>But can we do better? I read from this <a href="http://vinayakgarg.wordpress.com/2012/11/07/fastest-way-to-compute-fibonacci-number/">post</a>, the author gave out a decent solution based on the fact that
-$$
-\begin{equation}
-  F_{2k} = F_k*(F_{k+1} &ndash; F_k) \
-  F_{2k+1} = F_{k+1}^2 + F_k^2
+<p>But can we do better? I read from this <a href="http://vinayakgarg.wordpress.com/2012/11/07/fastest-way-to-compute-fibonacci-number/">post</a>, the author gave out a decent solution based on the fact that</p>
+
+<p>\begin{equation}
+  F_{2k} = F_k*(F_{k+1} &ndash; F_k)
 \end{equation}
-$$</p>
+\begin{equation}
+  F_{2k+1} = F_{k+1}^2 + F_k^2
+\end{equation}</p>
 
 <p>I just copied over the code for you to read, as below.</p>
 
@@ -300,6 +301,8 @@ Given by below python code:</p>
         <a class="basic-alignment left" href="/blog/2014/07/26/firefox-customization-for-programmers/" title="Previous Post: Firefox Customization for Programmers">&laquo; Firefox Customization for Programmers</a>
       
       
+        <a class="basic-alignment right" href="/blog/2014/08/12/bitwise-operations/" title="Next Post: Bitwise Operations">Bitwise Operations &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -317,6 +320,10 @@ Given by below python code:</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/bitwise-operations/">Bitwise Operations</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonacci Numbers</a>

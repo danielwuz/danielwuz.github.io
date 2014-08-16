@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://danielwuz.github.io/blog/2014/08/12/bitwise-operations/</loc>
+    <lastmod>2014-08-12T07:01:23-04:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://danielwuz.github.io/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/</loc>
     <lastmod>2014-07-29T21:26:00-04:00</lastmod>
     <priority>0.8</priority>
@@ -23,14 +29,14 @@
   
   <url>
     <loc>http://danielwuz.github.io/blog/archives/</loc>
-    <lastmod>2014-08-02T08:35:30-04:00</lastmod>
+    <lastmod>2014-08-16T09:18:38-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://danielwuz.github.io/</loc>
-    <lastmod>2014-08-02T08:35:30-04:00</lastmod>
+    <lastmod>2014-08-16T09:18:38-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

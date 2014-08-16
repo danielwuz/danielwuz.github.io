@@ -4,7 +4,7 @@
   <title><![CDATA[Daniel Wu's Blog]]></title>
   <link href="http://danielwuz.github.io/atom.xml" rel="self"/>
   <link href="http://danielwuz.github.io/"/>
-  <updated>2014-08-02T08:35:30-04:00</updated>
+  <updated>2014-08-16T09:18:38-04:00</updated>
   <id>http://danielwuz.github.io/</id>
   <author>
     <name><![CDATA[Daniel Wu]]></name>
@@ -12,6 +12,158 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Bitwise Operations]]></title>
+    <link href="http://danielwuz.github.io/blog/2014/08/12/bitwise-operations/"/>
+    <updated>2014-08-12T07:01:23-04:00</updated>
+    <id>http://danielwuz.github.io/blog/2014/08/12/bitwise-operations</id>
+    <content type="html"><![CDATA[<p>I recently took an online course &ldquo;Hardware Software Interface&rdquo; on Coursera, honored by &ldquo;University of Washington&rdquo;. It&rsquo;s a great course, and brought my memory to those good old days back in school many years ago. In the first lecture, the professor talked about how computer handles numbers through bitwise operation. Although nowadays, the majority of programmers are programming in high-level languages, I believe as a programmer, it&rsquo;s important for us to understand what these basics are and how to use them effectively.</p>
+
+<p>If you haven&rsquo;t studied this topic thoroughly, or need to refresh your memory, take a look at the &ldquo;Resources&rdquo; section, as I&rsquo;ve listed couple resources there for you to reference. In this blog post, I&rsquo;ll be showing you some of the moset common bitwise operation.</p>
+
+<h1>Application</h1>
+
+<h3>Extract the 2nd most significant byte of an integer</h3>
+
+<p>First shift, then mask: <code>(x &gt;&gt; 17) &amp; 0xFF</code></p>
+
+<h3>Extract the sign of an integer:</h3>
+
+<p>Use <code>&amp; 1</code> to clear out all other bits except LSB: <code>(x &gt;&gt; 31) &amp; 1</code></p>
+
+<h3>Conditionals as Boolean expressions</h3>
+
+<p>Assuming x is 0 or 1, an <code>if-else</code> statement</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">a</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">a</span> <span class="o">=</span> <span class="n">z</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which is the same as <code>a = x ? y : z;</code></p>
+
+<p>can be rewritten as: <code>a = ((x &lt;&lt; 31) &gt;&gt; 31) &amp; y + ((!x) &lt;&lt; 31</code> on a 32-bit machine.</p>
+
+<h3>Determining if an integer is a power of 2</h3>
+
+<p>We can determine if an integer is power of 2 by <code>(v &amp; (v - 1)) == 0;</code>, assuming 0 is not considered as power of 2.</p>
+
+<h3>Compute exponentiation</h3>
+
+<p>Supporse we&rsquo;d like to compute the exponentiation operation of $x^y$ in real numbers, the brute-force way is to multiply $x$ by itself $y$ times, as in below code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39; compute x**y &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">result</span> <span class="o">*=</span> <span class="n">x</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The complexity of this approach is in the order of the length of $y$, which is exponential in binary.</p>
+
+<p>Observe that $x^y$ can be computed in below equation:</p>
+
+<p>$$
+\begin{equation}
+  x^y =
+  \begin{cases}
+  (x^\frac{y}{2})^2 &amp; \text{if } y \text{ mod } 2 = 0, \cr
+  (x^\frac{y}{2})^2 * x &amp; \text{if } y \text{ mod } 2 = 1.
+  \end{cases}
+\end{equation}
+$$</p>
+
+<p>We can use a recursive function to implement above logic:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39; compute x**y &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="n">x</span>
+</span><span class='line'>    <span class="n">tmp</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">y</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">tmp</span> <span class="o">*</span> <span class="n">tmp</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">tmp</span> <span class="o">*</span> <span class="n">tmp</span> <span class="o">*</span> <span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Running time of this computation is logarithmic to the value of $y$, therefore linear to the length of $y$ in binary.</p>
+
+<p>A third way is to utilize bit shifting operation. Think this way, suppose we can represent $y$ in binary $k_1k_2..k_i..k_n$, where $k_i$ has value either 0 or 1, we can compute $x^y$ like below:
+$$
+x^y = x^{k_1k_2..k_i} = \prod{x^{k_i}} \text{ where } ith \text{ bit } = 1
+$$
+For example, $2^{10}$ can be written as
+$$
+2^{10_{10}} = 2^{1010_2} = 2^{1000_2} * 2^{0010_2}
+$$</p>
+
+<p>Therefore, we can continuously shift $y$ to the right and check its $i$th bit until all bits are checked, as shown in below python code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;computes x**y &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">y</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">result</span> <span class="o">*=</span> <span class="n">x</span>
+</span><span class='line'>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</span><span class='line'>        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Comparing the the second approach, bit shifting way is faster because bitwise operation is faster as it avoids the overhead of function calls and call stack management, as opposed to recursive function call.</p>
+
+<p>If you still don&rsquo;t understand how this algorithm works, I encourage you take a piece of paper and a pen, and work out a concrete example.</p>
+
+<h1>Resources</h1>
+
+<p>There are more to say about bitwise operation. I&rsquo;ve listed here some good articles and videos below that talk about it in a decent depth.</p>
+
+<ul>
+<li><a href="https://www.youtube.com/playlist?list=PL726AB973C6E39758">Understanding Binary Numbers</a>: A series of videos on Youtube designed to improve your understanding of binary numbers, including how to add, subtract, multiply and divide binary numbers.</li>
+<li><a href="http://www.cprogramming.com/tutorial/bitwise_operators.html">Bitwise Operators in C and C++: A Tutorial</a>:</li>
+<li><a href="http://stackoverflow.com/questions/141525/absolute-beginners-guide-to-bit-shifting">Discussion on StackOverflow</a>: some suggestions for absolute beginners to bit shifting.</li>
+<li><a href="https://graphics.stanford.edu/~seander/bithacks.html">Bit Twiddling Hacks</a>:</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fastest Way to Compute Fibonacci Numbers]]></title>
@@ -90,13 +242,14 @@ This number sequence has many beautiful properties, and numerous algorithms and 
 
 <p>Observe that we compute each Fibonacci number from 0 to $n$ only once. Therefore, the complexity of computing $n$th Fibonacci number reduces to $O(n)$ immediately!</p>
 
-<p>But can we do better? I read from this <a href="http://vinayakgarg.wordpress.com/2012/11/07/fastest-way-to-compute-fibonacci-number/">post</a>, the author gave out a decent solution based on the fact that
-$$
-\begin{equation}
-  F_{2k} = F_k*(F_{k+1} &ndash; F_k) \
-  F_{2k+1} = F_{k+1}^2 + F_k^2
+<p>But can we do better? I read from this <a href="http://vinayakgarg.wordpress.com/2012/11/07/fastest-way-to-compute-fibonacci-number/">post</a>, the author gave out a decent solution based on the fact that</p>
+
+<p>\begin{equation}
+  F_{2k} = F_k*(F_{k+1} &ndash; F_k)
 \end{equation}
-$$</p>
+\begin{equation}
+  F_{2k+1} = F_{k+1}^2 + F_k^2
+\end{equation}</p>
 
 <p>I just copied over the code for you to read, as below.</p>
 
