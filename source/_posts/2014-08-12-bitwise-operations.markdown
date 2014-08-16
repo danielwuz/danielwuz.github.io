@@ -9,7 +9,7 @@ I recently took an online course [Hardware/Software Interface](https://class.cou
 
 If you haven't studied this topic thoroughly, or need to refresh your memory, take a look at the "Resources" section, as I've listed couple resources there for you to reference. In this blog post, I'll be showing you some of the moset common bitwise operation.
 
-# Application
+## Application
 
 ### Extract the 2nd most significant byte of an integer
 First shift, then mask: `(x >> 17) & 0xFF`
