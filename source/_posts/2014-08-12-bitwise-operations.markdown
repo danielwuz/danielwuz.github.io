@@ -5,7 +5,7 @@ date: 2014-08-12 07:01:23 -0400
 comments: true
 categories:
 ---
-I recently took an online course "Hardware Software Interface" on Coursera, honored by "University of Washington". It's a great course, and brought my memory to those good old days back in school many years ago. In the first lecture, the professor talked about how computer handles numbers through bitwise operation. Although nowadays, the majority of programmers are programming in high-level languages, I believe as a programmer, it's important for us to understand what these basics are and how to use them effectively.
+I recently took an online course [Hardware/Software Interface](https://class.coursera.org/hwswinterface-002) on Coursera, offered by University of Washington. It's a great course, and brought my memory to those good old days back in school many years ago. In the first lecture, the professor talked about how computer handles numbers through bitwise operation. Although nowadays, the majority of programmers are programming in high-level languages, I believe as a programmer, it's important for us to understand what these basics are and how to use them effectively.
 
 If you haven't studied this topic thoroughly, or need to refresh your memory, take a look at the "Resources" section, as I've listed couple resources there for you to reference. In this blog post, I'll be showing you some of the moset common bitwise operation.
 
