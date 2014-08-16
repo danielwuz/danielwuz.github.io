@@ -4,7 +4,7 @@
   <title><![CDATA[Daniel Wu's Blog]]></title>
   <link href="http://danielwuz.github.io/atom.xml" rel="self"/>
   <link href="http://danielwuz.github.io/"/>
-  <updated>2014-08-16T09:18:38-04:00</updated>
+  <updated>2014-08-16T09:21:27-04:00</updated>
   <id>http://danielwuz.github.io/</id>
   <author>
     <name><![CDATA[Daniel Wu]]></name>
@@ -18,7 +18,7 @@
     <link href="http://danielwuz.github.io/blog/2014/08/12/bitwise-operations/"/>
     <updated>2014-08-12T07:01:23-04:00</updated>
     <id>http://danielwuz.github.io/blog/2014/08/12/bitwise-operations</id>
-    <content type="html"><![CDATA[<p>I recently took an online course &ldquo;Hardware Software Interface&rdquo; on Coursera, honored by &ldquo;University of Washington&rdquo;. It&rsquo;s a great course, and brought my memory to those good old days back in school many years ago. In the first lecture, the professor talked about how computer handles numbers through bitwise operation. Although nowadays, the majority of programmers are programming in high-level languages, I believe as a programmer, it&rsquo;s important for us to understand what these basics are and how to use them effectively.</p>
+    <content type="html"><![CDATA[<p>I recently took an online course <a href="https://class.coursera.org/hwswinterface-002">Hardware/Software Interface</a> on Coursera, offered by University of Washington. It&rsquo;s a great course, and brought my memory to those good old days back in school many years ago. In the first lecture, the professor talked about how computer handles numbers through bitwise operation. Although nowadays, the majority of programmers are programming in high-level languages, I believe as a programmer, it&rsquo;s important for us to understand what these basics are and how to use them effectively.</p>
 
 <p>If you haven&rsquo;t studied this topic thoroughly, or need to refresh your memory, take a look at the &ldquo;Resources&rdquo; section, as I&rsquo;ve listed couple resources there for you to reference. In this blog post, I&rsquo;ll be showing you some of the moset common bitwise operation.</p>
 
