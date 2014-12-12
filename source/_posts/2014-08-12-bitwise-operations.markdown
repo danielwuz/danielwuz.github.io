@@ -11,6 +11,9 @@ If you haven't studied this topic thoroughly, or need to refresh your memory, ta
 
 ## Application
 
+### Check if two variables have the same signs
+Two variables `x` and `y` are both positive or both negative if `(x > 0) ^ (y > 0) == 0`
+
 ### Extract the 2nd most significant byte of an integer
 First shift, then mask: `(x >> 17) & 0xFF`
 
