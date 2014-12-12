@@ -4,7 +4,7 @@
   <title><![CDATA[Daniel Wu's Blog]]></title>
   <link href="http://danielwuz.github.io/atom.xml" rel="self"/>
   <link href="http://danielwuz.github.io/"/>
-  <updated>2014-12-12T10:05:51-05:00</updated>
+  <updated>2014-12-12T10:39:22-05:00</updated>
   <id>http://danielwuz.github.io/</id>
   <author>
     <name><![CDATA[Daniel Wu]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Show Progress While Downloading in Elisp]]></title>
+    <link href="http://danielwuz.github.io/blog/2014/12/12/show-progress-while-downloading-in-elisp/"/>
+    <updated>2014-12-12T10:09:02-05:00</updated>
+    <id>http://danielwuz.github.io/blog/2014/12/12/show-progress-while-downloading-in-elisp</id>
+    <content type="html"><![CDATA[<p>Below is an example of showing a progress bar while downloading in Elisp.</p>
+
+<p><img src="http://danielwuz.github.io/images/20141212/show-downloading-progress.png" title="tab margin" alt="img" /></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">show-progress-demo</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">download-reporter</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">make-progress-reporter</span> <span class="s">&quot;Downloading python documentation...&quot;</span>
+</span><span class='line'>                                 <span class="mi">0</span>  <span class="mi">100</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">url-retrieve</span> <span class="s">&quot;http://www.google.com&quot;</span>
+</span><span class='line'>                  <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">data</span> <span class="nv">bar</span><span class="p">)</span>
+</span><span class='line'>                    <span class="c1">;; skip http header</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nv">re-search-forward</span> <span class="s">&quot;\r?\n\r?\n&quot;</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nv">write-region</span> <span class="p">(</span><span class="nv">point</span><span class="p">)</span> <span class="p">(</span><span class="nv">point-max</span><span class="p">)</span> <span class="s">&quot;/tmp/google&quot;</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nv">progress-reporter-done</span> <span class="nv">bar</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">)</span> <span class="o">`</span><span class="p">(</span><span class="o">,</span><span class="nv">download-reporter</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">k</span> <span class="mi">100</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">sit-for</span> <span class="mf">0.01</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">progress-reporter-update</span> <span class="nv">download-reporter</span> <span class="nv">k</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>url-retrieve</code> is an Elisp function to asynchronously retrieve URL. <code>progress-reporter-update</code> is to continuously display how much percentage has completed in echo area.</p>
+
+<p>First thing you need to pay attention is this line of code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nv">re-search-forward</span> <span class="s">&quot;\r?\n\r?\n&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because response content of the callback also contains the HTTP headers, you need to skip them before writing to disk.</p>
+
+<p>Another key part of this demo is that <code>download-reporter</code> has to be passed in as an object to <code>url-retrieve</code> callback. This is because when an asynchronous program starts running in elisp, Emacs launches a separate process for it. Thus we have to pass it as callback argument in order to use it, otherwise, you&rsquo;ll receive an error message:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nb">error</span> <span class="nv">in</span> <span class="nv">process</span> <span class="nv">filter:</span> <span class="nv">Symbol</span><span class="ss">&#39;s</span> <span class="nv">value</span> <span class="nv">as</span> <span class="nv">variable</span> <span class="nv">is</span> <span class="nv">void:</span> <span class="nv">download-reporter</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s worth to know that <code>url-retrieve</code> also has a sibling <code>url-copy-file</code>, which download a file synchronously. If you don&rsquo;t need to show downloading progress, go with the latter, it&rsquo;s much easier to use.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Bitwise Operations]]></title>

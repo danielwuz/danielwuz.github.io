@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Show Progress While Downloading in Elisp - Daniel Wu's Blog</title>
+  <meta name="author" content="Daniel Wu">
+
+  
+  <meta name="description" content="Below is an example of showing a progress bar while downloading in Elisp. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+(defun show-progress-demo () ( &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://danielwuz.github.io/blog/2014/12/12/show-progress-while-downloading-in-elisp">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Daniel Wu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script src="/javascripts/custom.js" type="text/javascript"></script>
+<!-- <script src="/javascripts/footnote.js" type="text/javascript"></script> -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$']],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+    multiLine: true,
+  },
+  messageStyle: "none",
+  "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Daniel Wu's Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:danielwuz.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Show Progress While Downloading in Elisp</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-12T10:09:02-05:00" pubdate data-updated="true">Dec 12<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Below is an example of showing a progress bar while downloading in Elisp.</p>
+
+<p><img src="/images/20141212/show-downloading-progress.png" title="tab margin" alt="img" /></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">show-progress-demo</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">download-reporter</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">make-progress-reporter</span> <span class="s">&quot;Downloading python documentation...&quot;</span>
+</span><span class='line'>                                 <span class="mi">0</span>  <span class="mi">100</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">url-retrieve</span> <span class="s">&quot;http://www.google.com&quot;</span>
+</span><span class='line'>                  <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">data</span> <span class="nv">bar</span><span class="p">)</span>
+</span><span class='line'>                    <span class="c1">;; skip http header</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nv">re-search-forward</span> <span class="s">&quot;\r?\n\r?\n&quot;</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nv">write-region</span> <span class="p">(</span><span class="nv">point</span><span class="p">)</span> <span class="p">(</span><span class="nv">point-max</span><span class="p">)</span> <span class="s">&quot;/tmp/google&quot;</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nv">progress-reporter-done</span> <span class="nv">bar</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">)</span> <span class="o">`</span><span class="p">(</span><span class="o">,</span><span class="nv">download-reporter</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">k</span> <span class="mi">100</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">sit-for</span> <span class="mf">0.01</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">progress-reporter-update</span> <span class="nv">download-reporter</span> <span class="nv">k</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>url-retrieve</code> is an Elisp function to asynchronously retrieve URL. <code>progress-reporter-update</code> is to continuously display how much percentage has completed in echo area.</p>
+
+<p>First thing you need to pay attention is this line of code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nv">re-search-forward</span> <span class="s">&quot;\r?\n\r?\n&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because response content of the callback also contains the HTTP headers, you need to skip them before writing to disk.</p>
+
+<p>Another key part of this demo is that <code>download-reporter</code> has to be passed in as an object to <code>url-retrieve</code> callback. This is because when an asynchronous program starts running in elisp, Emacs launches a separate process for it. Thus we have to pass it as callback argument in order to use it, otherwise, you&rsquo;ll receive an error message:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nb">error</span> <span class="nv">in</span> <span class="nv">process</span> <span class="nv">filter:</span> <span class="nv">Symbol</span><span class="ss">&#39;s</span> <span class="nv">value</span> <span class="nv">as</span> <span class="nv">variable</span> <span class="nv">is</span> <span class="nv">void:</span> <span class="nv">download-reporter</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s worth to know that <code>url-retrieve</code> also has a sibling <code>url-copy-file</code>, which download a file synchronously. If you don&rsquo;t need to show downloading progress, go with the latter, it&rsquo;s much easier to use.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Daniel Wu</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-12T10:09:02-05:00" pubdate data-updated="true">Dec 12<sup>th</sup>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://danielwuz.github.io/blog/2014/12/12/show-progress-while-downloading-in-elisp/" data-via="" data-counturl="http://danielwuz.github.io/blog/2014/12/12/show-progress-while-downloading-in-elisp/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/12/bitwise-operations/" title="Previous Post: Bitwise Operations">&laquo; Bitwise Operations</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/12/show-progress-while-downloading-in-elisp/">Show Progress While Downloading in Elisp</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/bitwise-operations/">Bitwise Operations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/29/fastest-way-to-compute-fibonnaci-numbers/">Fastest Way to Compute Fibonacci Numbers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/26/firefox-customization-for-programmers/">Firefox Customization for Programmers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/23/my-first-blog/">My First Blog</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Daniel Wu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'danielwuz';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://danielwuz.github.io/blog/2014/12/12/show-progress-while-downloading-in-elisp/';
+        var disqus_url = 'http://danielwuz.github.io/blog/2014/12/12/show-progress-while-downloading-in-elisp/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
